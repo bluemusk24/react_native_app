@@ -1,0 +1,97 @@
+# React Native Tutorial:
+- React native uses JavaScript and React framework to create native mobile application for IOS and Android. Here, I'll be using Expo-Go route (newbies in mobile development) for creating mobile apps; although, react native cli can also be used to create custom apps (for expert only). VScode  will be used as IDE
+
+* npx create-expo-app bethanys-v2 --> create expo application (bethanys-v2) for React Native, it should install all packages/components. cd bethanys-v2. Check package.json for different installed dependencies.
+
+* npm run start --> run the expo application, wait for the QR code
+
+# Customizing the Splash Screen: We will use Bethany.png(picture in downloaded materials) as the Splash screen customization of our app 
+
+1. Place the Bethany.png in ./assets/images/bethanys.png
+
+2. on app.json, add below in the expo section. Reference the downloaded folder 02/app.json
+ "splash": {
+      "image": "./assets/bethanys.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#d77948"     
+    },
+
+# Customizing App Icon:
+
+1.(IOS and Android use .png and 1024*1024 app icon)
+
+2. On the app.json, edit the below:
+
+"icon": "./assets/images/icon copy.png"
+
+"android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon copy.png",
+        "backgroundColor": "#d77948"
+      }
+"web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon copy.png"
+    },
+
+# Using Themes: 
+
+"userInterfaceStyle": "automatic",  --> exactly in app.json
+
+* copy fonts into the bethanys-v2
+
+* Add the below to the _layout.tsx
+import { useCallback } from 'react';  --> add this import to _layout.tsx
+
+  const [fontsLoaded, fontError] = useFonts({
+    'Hochstadt-Serif': require('./assets/fonts/Hochstadt-Serif.otf'),
+    'TheGreatOutdoors-Regular': require('./assets/fonts/TheGreatOutdoors-Regular.otf'),
+    'WorkSans-Regular': require('./assets/fonts/WorkSans-Regular.ttf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
+# Safe Area Context for the Android/IOS phone
+
+* npx expo install react-native-safe-area-context
+
+# Using Expo Router: navigate the pages of the app
+
+* create an index.js in the app folder --> to route all files in expo. this will be the display screen/ home page. code below for testing
+import { View, Text } from 'react-native';
+const Home = () => {
+    return (
+        <View>
+            <Text>this is a home page</Text>
+        </View>
+    );
+};
+
+export default Home;
+
+* create Header.js and footer.js in the app folder  --> check codes
+* create layout.js page --> this displays header and footer above
+* create components folder in root directory and PieDisplay.js in the folder
+* Edit the index.js (home page)  --> check codes
+* npx expo start -c --tunnel (demo the app) 
+* create about.js (info about Bethany's app) in the app folder --> check codes
+* create contact.js (users communicate with Bethany's staff) in the app folder --> check codes
+* create newsdata.js, news.js and news in the app folder --> check codes
+* create register.js, bethanycontext.js in the app folder
+* create login.js in the app folder
+
+# Adding the Shop to the app
+* create shopdata.js in the app folder and shopItem.js in the component folder
+* create productDetail.js in the app folder
+* update the bethanyContext.js in the app folder
+* create cart.js in the app folder
+* update the SHopItem.js and piedisplay.js in the component folder
